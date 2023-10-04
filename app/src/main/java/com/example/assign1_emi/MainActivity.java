@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Init objects from component resources
-        // These will be used to get the values from the UI
+        // These will be used to get the values from the UI components
         inputAmount = findViewById(R.id.text_Result);
         inputMonths = findViewById(R.id.input_Months);
         inputInterest = findViewById(R.id.input_Interest);
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         btnCalculate.setOnClickListener(view -> {
             calcEMI();
 
-            // Set toast bar message for user
+            // Show toast bar message
             CharSequence text = "Calculation done!";
             int duration = Toast.LENGTH_LONG;
             Toast toast = Toast.makeText(getApplicationContext(), text, duration);
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             inputMonths.getText().clear();
             inputInterest.getText().clear();
 
-            // Set toast bar message for user
+            // Show toast bar message
             CharSequence text = "Cleared all values";
             int duration = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(getApplicationContext(), text, duration);
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
             intent.putExtra(SearchManager.QUERY, "what is equated monthly installment");
 
-            // Set toast bar message for user
+            // Show toast bar message
             CharSequence text = "Starting Google web search";
             int duration = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(getApplicationContext(), text, duration);
@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void calcEMI() {
         try {
+            // Parse values from objects to perform calculations
             double principalAmount = Double.parseDouble(inputAmount.getText().toString());
             int numMonths = Integer.parseInt(inputMonths.getText().toString());
             double annualRate = Double.parseDouble(inputInterest.getText().toString());
@@ -90,12 +91,12 @@ public class MainActivity extends AppCompatActivity {
             double emiAmount = principalAmount * monthlyRate * Math.pow(1 + monthlyRate, numMonths) / (Math.pow(1 + monthlyRate, numMonths) - 1);
             String result = "$" + String.format("%.2f", emiAmount);
 
-            // Pass result to the result activity
+            // Pass result to the result activity via Intent
             Intent intent = new Intent(MainActivity.this, ResultActivity.class);
             intent.putExtra("emiAmount", result);
             startActivity(intent);
         } catch (NumberFormatException e) {
-            // Set toast bar message for user
+            // Show toast bar message
             CharSequence text = "Invalid input! Please try again";
             int duration = Toast.LENGTH_LONG;
             Toast toast = Toast.makeText(getApplicationContext(), text, duration);

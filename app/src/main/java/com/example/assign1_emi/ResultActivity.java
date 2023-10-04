@@ -18,8 +18,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ResultActivity extends AppCompatActivity {
-    private ClipboardManager myClipboard;
-    private ClipData myClip;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,15 +76,23 @@ public class ResultActivity extends AppCompatActivity {
 
         // On click listener for copy to clipboard button
         btnCopy.setOnClickListener(view -> {
+            // Declare/init clipboard objects
+            ClipboardManager myClipboard;
+            ClipData myClip;
+
+            // Get EMI result via Intent and copy to clipboard
             Intent copyIntent = getIntent();
             myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
             String text = copyIntent.getStringExtra("emiAmount");
             myClip = ClipData.newPlainText("text", text);
             myClipboard.setPrimaryClip(myClip);
+
+            // Show toast bar message showing value is copied to clipboard
             Toast.makeText(getApplicationContext(), "EMI Copied to Clipboard",Toast.LENGTH_SHORT).show();
         });
 
         // On click listener for back button
+        // Allows user to navigate back to main activity
         btnBack.setOnClickListener(view -> onBackPressed());
     }
 
